@@ -2,7 +2,8 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
-const Dotenv = require('dotenv-webpack');
+const Dotenv = require('dotenv-webpack')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -17,9 +18,15 @@ const config = {
     hot: true,
   },
   plugins: [
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false,
+      analyzerPort: 8088,
+    }),
     new Dotenv(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
+      hash: true,
+      favicon: path.resolve(__dirname, './src/assets/frog-icon.png'),
       template: path.resolve(__dirname, './src/index.html'),
     }),
     new MiniCssExtractPlugin(),
