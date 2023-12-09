@@ -1,6 +1,8 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
+const Dotenv = require('dotenv-webpack');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -8,22 +10,33 @@ const config = {
   entry:  path.resolve(__dirname, './src/index.ts'),
   output: {
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
+  devtool: isProduction ? false : 'source-map',
   devServer: {
     hot: true,
   },
   plugins: [
+    new Dotenv(),
+    new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      template: 'index.html',
+      template: path.resolve(__dirname, './src/index.html'),
     }),
     new MiniCssExtractPlugin(),
   ],
   module: {
     rules: [
       {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+      },
+      {
         test: /\.(ts|tsx)$/i,
         loader: 'ts-loader',
         exclude: ['/node_modules/'],
+        options: {
+          appendTsSuffixTo: [/\.vue$/]
+        }
       },
       {
         test: /\.s[ac]ss$/i,
