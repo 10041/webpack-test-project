@@ -5,11 +5,12 @@ const { VueLoaderPlugin } = require('vue-loader')
 const Dotenv = require('dotenv-webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const { DefinePlugin } = require('webpack')
+const ESLintPlugin = require('eslint-webpack-plugin')
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 
 const config = {
-  entry:  path.resolve(__dirname, './src/index.ts'),
+  entry: path.resolve(__dirname, './src/index.ts'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
@@ -36,6 +37,9 @@ const config = {
       template: path.resolve(__dirname, './src/index.html'),
     }),
     new MiniCssExtractPlugin(),
+    new ESLintPlugin({
+      extensions: ['ts', 'vue'],
+    }),
   ],
   module: {
     rules: [
@@ -51,9 +55,9 @@ const config = {
           {
             loader: 'ts-loader',
             options: {
-              appendTsSuffixTo: [/\.vue$/]
-            }
-          }
+              appendTsSuffixTo: [/\.vue$/],
+            },
+          },
         ],
       },
       {
@@ -62,8 +66,8 @@ const config = {
           'vue-style-loader',
           'css-loader',
           'postcss-loader',
-          'sass-loader'
-        ]
+          'sass-loader',
+        ],
       },
       {
         test: /(?<!\.vue)\.(s?[ac]ss)$/,
@@ -71,7 +75,7 @@ const config = {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          'sass-loader'
+          'sass-loader',
         ],
       },
       {
@@ -83,17 +87,17 @@ const config = {
   resolve: {
     extensions: ['.vue', '.tsx', '.ts', '.jsx', '.js', '...'],
     alias: {
-      'vue': '@vue/runtime-dom'
-    }
+      vue: '@vue/runtime-dom',
+    },
   },
-};
+}
 
 module.exports = () => {
-  config.mode = 'development';
+  config.mode = 'development'
 
   if (isProduction) {
-    config.mode = 'production';
+    config.mode = 'production'
   }
 
-  return config;
-};
+  return config
+}

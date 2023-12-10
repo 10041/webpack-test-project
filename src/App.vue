@@ -1,5 +1,7 @@
 <template>
-  <h1 class="text-center">Hello World {{ test }}</h1>
+  <h1 class="text-center">
+    Hello World {{ test }}
+  </h1>
   <h2>test</h2>
 </template>
 
