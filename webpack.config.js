@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const Dotenv = require('dotenv-webpack')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const { DefinePlugin } = require('webpack')
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -18,7 +19,12 @@ const config = {
     hot: true,
   },
   plugins: [
+    new DefinePlugin({
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: false,
+    }),
     new BundleAnalyzerPlugin({
+      analyzerMode: isProduction ? 'disabled' : 'server',
       openAnalyzer: false,
       analyzerPort: 8088,
     }),
@@ -38,16 +44,35 @@ const config = {
         loader: 'vue-loader',
       },
       {
-        test: /\.(ts|tsx)$/i,
-        loader: 'ts-loader',
-        exclude: ['/node_modules/'],
-        options: {
-          appendTsSuffixTo: [/\.vue$/]
-        }
+        test: /\.(ts|js)x?$/,
+        exclude: /node_modules/,
+        use: [
+          'babel-loader',
+          {
+            loader: 'ts-loader',
+            options: {
+              appendTsSuffixTo: [/\.vue$/]
+            }
+          }
+        ],
       },
       {
-        test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+        test: /\.vue\.(s?[ac]ss)$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /(?<!\.vue)\.(s?[ac]ss)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
@@ -56,7 +81,10 @@ const config = {
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
+    extensions: ['.vue', '.tsx', '.ts', '.jsx', '.js', '...'],
+    alias: {
+      'vue': '@vue/runtime-dom'
+    }
   },
 };
 

@@ -1,5 +1,7 @@
 $body-color: azure;
-
+::placeholder {
+  color: gray;
+}
 body {
   background-color: $body-color;
 }
