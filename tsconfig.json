@@ -8,15 +8,7 @@
     "allowJs": false,
     "moduleResolution": "node",
     "sourceMap": true,
-    "baseUrl": ".",
-    "types": [
-      "node",
-    ],
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
+    "baseUrl": "./",
     "lib": [
       "esnext",
       "dom",

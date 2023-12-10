@@ -14,8 +14,8 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   plugins: [
-    '@typescript-eslint',
     'import',
+    '@typescript-eslint',
   ],
   settings: {
     'import/resolver': {

@@ -39,6 +39,7 @@ const config = {
     new MiniCssExtractPlugin(),
     new ESLintPlugin({
       extensions: ['ts', 'vue'],
+      emitWarning: false,
     }),
   ],
   module: {
