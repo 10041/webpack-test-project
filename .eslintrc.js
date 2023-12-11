@@ -45,6 +45,8 @@ module.exports = {
     }],
     'no-plusplus': 'off',
     'no-shadow': 'off',
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-underscore-dangle': ['error', { allowAfterThis: true }],
     'no-unused-expressions': ['error', { allowShortCircuit: true, allowTernary: true }],
     'object-curly-newline': 'off',
@@ -68,8 +70,7 @@ module.exports = {
     },
     {
       files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)',
+        '**/tests/**/*.spec.{j,t}s?(x)',
       ],
       env: {
         jest: true,

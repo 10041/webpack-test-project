@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-navigation-drawer expand-on-hover rail color="primary">
-      <v-list density="compact" nav>
+    <v-navigation-drawer expand-on-hover :rail="true" color="primary">
+      <v-list density="compact" :nav="true">
         <v-list-item prepend-icon="mdi-home-outline" title="Todo list" value="todo" />
         <v-list-group value="patterns">
           <template #activator="{ props }: { props: Record<string, unknown> }">
@@ -16,7 +16,8 @@
       </v-list>
     </v-navigation-drawer>
     <v-main>
-      <h2>{{ test }}</h2>
+      <h1>{{ test }}</h1>
+      <h2>{{ testEnv }}</h2>
     </v-main>
   </v-app>
 </template>
@@ -24,7 +25,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-const test = ref('test')
+const test = ref('Test title')
+const testEnv = process.env.TEST_ENV
 
 onMounted(() => {
   console.log(process.env.TEST_ENV)

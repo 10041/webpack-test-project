@@ -3,8 +3,9 @@
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
+    "esModuleInterop": true,
     "module": "esnext",
-    "target": "es5",
+    "target": "esnext",
     "allowJs": false,
     "moduleResolution": "node",
     "sourceMap": true,
@@ -14,6 +15,10 @@
       "dom",
       "dom.iterable",
       "scripthost"
+    ],
+    "types": [
+      "node",
+      "jest"
     ]
   },
   "include": [
